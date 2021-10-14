@@ -54,3 +54,36 @@ strlen = InStr(1, MyBuff, vbNullChar) - 1
 MsgBox Left$(MyBuff, strlen)
 End Sub
 ```
+### VBA Shellcode Runner
+#### Setting Memory Page Parameter
+```
+Public Enum protectFlags
+PAGE_NOACCESS = &H1
+PAGE_READONLY = &H2
+PAGE_READWRITE = &H4
+PAGE_WRITECOPY = &H8
+PAGE_EXECUTE = &H10
+PAGE_EXECUTE_READ = &H20
+PAGE_EXECUTE_READWRITE = &H40
+PAGE_EXECUTE_WRITECOPY = &H80
+PAGE_GUARD = &H100
+PAGE_NOCACHE = &H200
+PAGE_WRITECOMBINE = &H400
+End Enum
+```
+#### VirtualAlloc
+##### C language
+`LPVOID VirtualAlloc( LPVOID lpAddress, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect );`
+##### VBA Invoke
+`Private Declare PtrSafe Function VirtualAlloc Lib "KERNEL32" (ByVal lpAddress As LongPtr, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As LongPtr`
+#### RtlMoveMemory
+##### C language
+`VOID RtlMoveMemory(VOID UNALIGNED *Destination,VOID UNALIGNED *Source,SIZE_T Length);`
+##### VBA Invoke
+`Private Declare PtrSafe Function RtlMoveMemory Lib "KERNEL32" (ByVal lDestination As LongPtr, ByRef sSource As Any, ByVal lLength As Long) As LongPtr`
+#### VirtualProtect
+##### C language
+`BOOL VirtualProtect(LPVOID lpAddress,SIZE_T dwSize,DWORD  flNewProtect,PDWORD lpflOldProtect);`
+##### VBA Invoke
+`Private Declare PtrSafe Function VirtualProtect Lib "kernel32" (lpAddress As LongPtr, ByVal dwSize As LongPtr, ByVal flNewProtect As LongPtr, lpflOldProtect As LongPtr) As LongPtr`
+
