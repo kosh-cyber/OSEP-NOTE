@@ -34,4 +34,9 @@ a.href = url; a.download = fileName; a.click();
 window.URL.revokeObjectURL(url);
 </script></body></html>
 ```
+## Executing Shellcode in Word
+### Calling Win32 APIs from VBA
+#### C language
+`BOOL GetUserNameA(LPSTR lpBuffer,LPDWORD pcbBuffer );`
+
 
