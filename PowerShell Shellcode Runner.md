@@ -4,7 +4,7 @@
 - 其中又以C# 中 System.Runtime.InteropServices 可以支援平台中的調用。
 ### MessageBox
 - C language
-int MessageBox( HWND hWnd, LPCTSTR lpText, LPCTSTR lpCaption, UINT uType);
+`int MessageBox( HWND hWnd, LPCTSTR lpText, LPCTSTR lpCaption, UINT uType);`
 - C# Invoke
-[DllImport("user32.dll", SetLastError = true, CharSet= CharSet.Auto)]
-public static extern int MessageBox(int hWnd, String text, String caption, uint type);
+`[DllImport("user32.dll", SetLastError = true, CharSet= CharSet.Auto)]
+public static extern int MessageBox(int hWnd, String text, String caption, uint type);`
