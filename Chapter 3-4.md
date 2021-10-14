@@ -38,5 +38,6 @@ window.URL.revokeObjectURL(url);
 ### Calling Win32 APIs from VBA
 #### C language
 `BOOL GetUserNameA(LPSTR lpBuffer,LPDWORD pcbBuffer );`
-
-
+#### VBA Invoke
+`Private Declare Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, ByRef nSize As Long) As Long`
+##### https://www.pinvoke.net/default.aspx/advapi32.getusername
