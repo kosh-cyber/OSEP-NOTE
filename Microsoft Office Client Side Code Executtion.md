@@ -72,24 +72,24 @@ PAGE_WRITECOMBINE = &H400
 End Enum
 ```
 #### VirtualAlloc
-##### C language
+- C language
 `LPVOID VirtualAlloc( LPVOID lpAddress, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect );`
-##### VBA Invoke
+-  VBA Invoke
 `Private Declare PtrSafe Function VirtualAlloc Lib "KERNEL32" (ByVal lpAddress As LongPtr, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As LongPtr`
 #### RtlMoveMemory
-##### C language
+-  C language
 `VOID RtlMoveMemory(VOID UNALIGNED *Destination,VOID UNALIGNED *Source,SIZE_T Length);`
-##### VBA Invoke
+-  VBA Invoke
 `Private Declare PtrSafe Function RtlMoveMemory Lib "KERNEL32" (ByVal lDestination As LongPtr, ByRef sSource As Any, ByVal lLength As Long) As LongPtr`
 #### VirtualProtect
-##### C language
+-  C language
 `BOOL VirtualProtect(LPVOID lpAddress,SIZE_T dwSize,DWORD  flNewProtect,PDWORD lpflOldProtect);`
-##### VBA Invoke
+-  VBA Invoke
 `Private Declare PtrSafe Function VirtualProtect Lib "kernel32" (lpAddress As LongPtr, ByVal dwSize As LongPtr, ByVal flNewProtect As LongPtr, lpflOldProtect As LongPtr) As LongPtr`
 #### CreateThread
-##### C language
+-  C language
 `HANDLE CreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId);`
-##### VBA Invoke
+-  VBA Invoke
 `Private Declare PtrSafe Function CreateThread Lib "KERNEL32" (ByVal SecurityAttributes As Long, ByVal StackSize As Long, ByVal StartFunction As LongPtr, ThreadParameter As LongPtr, ByVal CreateFlags As Long, ByRef ThreadId As Long) As LongPtr`
 #### VBA EXMAPLE CODE
 ```
