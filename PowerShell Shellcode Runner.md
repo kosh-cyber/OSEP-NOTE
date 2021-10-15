@@ -100,3 +100,19 @@ $GetModuleHandle = $unsafeObj.GetMethod('GetModuleHandle')
 $GetModuleHandle.Invoke($null, @("user32.dll")) 
 ```
 - ![圖片2](https://user-images.githubusercontent.com/81568292/137424843-940c88b8-25b9-4e02-a950-4731d4e8895b.png)
+### Invoke GetProcAddress from System.dll
+```
+$unsafeObj.GetMethods() | ForEachObject {If($_.Name -eq "GetProcAddress") {$_}}
+```
+- ![image](https://user-images.githubusercontent.com/81568292/137425483-e7e38c40-9864-420f-9bb4-d2b9327b78e6.png)
+### Get MessageBoxA
+```
+$systemdll = ([AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And $_.Location.Split('\\')[-1].Equals('System.dll') }) 
+$unsafeObj = $systemdll.GetType('Microsoft.Win32.UnsafeNativeMethods') 
+$GetModuleHandle = $unsafeObj.GetMethod('GetModuleHandle') 
+$user32 = $GetModuleHandle.Invoke($null, @("user32.dll")) 
+$tmp=@()
+$unsafeObj.GetMethods() | ForEach-Object {If($_.Name -eq "GetProcAddress") {$tmp+=$_}} 
+$GetProcAddress = $tmp[0]
+$GetProcAddress.Invoke($null, @($user32, "MessageBoxA"))
+```
