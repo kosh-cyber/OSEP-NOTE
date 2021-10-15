@@ -20,6 +20,6 @@ String caption, int options);
 }"@
 Add-Type $User32 
 ```
-- # Add-Type 會以指定的編譯器來編譯原始程式碼。 預設為CSharp 編譯器
+- Add-Type 會以指定的編譯器來編譯原始程式碼。 預設為CSharp 編譯器
 - `[User32]::MessageBox(0, "This is an alert", "MyBox", 0)`
 
