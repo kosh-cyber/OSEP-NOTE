@@ -66,3 +66,15 @@ $thandle=[Win32]::CreateThread(0,0,$addr,0,0,0);
 - 編譯過程是由 Visual C# 編譯器執行，但這樣的行為，C#程式碼和編譯後的暫存將會寫入硬碟中，就沒有達到無檔案的方式。
 - 為了讓程式碼持續留存在記憶體中而不被寫入硬碟，必須改用UnsafeNativeMethods尋找已存在的函式直接調用
 - 利用兩種函式**GetModuleHandle、GetProcAddress**尋找存在於 Win API 中的其他函式。
+### Enumerate UnsafeNativeMethods Function
+```
+$Assemblies = [AppDomain]::CurrentDomain.GetAssemblies() 
+$Assemblies | 
+	ForEach-Object {
+	 $_.GetTypes() | 
+	ForEach-Object { 
+		$_ | Get-Member -Static| Where-Object {	   $_.TypeName.Contains('Microsoft.Win32.UnsafeNativeMethods')
+	}
+          } 2> $null 
+}
+```
