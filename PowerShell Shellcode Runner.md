@@ -78,3 +78,25 @@ $Assemblies |
           } 2> $null 
 }
 ```
+### Enumerate UnsafeNativeMethods DLL Path
+```
+$Assemblies = [AppDomain]::CurrentDomain.GetAssemblies() 
+$Assemblies |
+ 	ForEach-Object {
+	 $_.Location
+	 $_.GetTypes()|
+		 ForEach-Object {
+		 $_ | Get-Member -Static| Where-Object { 
+$_.TypeName.Equals('Microsoft.Win32.UnsafeNativeMethods')
+	 }
+		 } 2> $null
+ } 
+```
+### Invoke GetModuleHandle from System.dll
+```
+$systemdll = ([AppDomain]::CurrentDomain.GetAssemblies() | Where-Object { $_.GlobalAssemblyCache -And _.Location.Split('\\')[-1].Equals('System.dll') })
+$unsafeObj = $systemdll.GetType('Microsoft.Win32.UnsafeNativeMethods')
+$GetModuleHandle = $unsafeObj.GetMethod('GetModuleHandle')
+$GetModuleHandle.Invoke($null, @("user32.dll")) 
+```
+- ![圖片2](https://user-images.githubusercontent.com/81568292/137424843-940c88b8-25b9-4e02-a950-4731d4e8895b.png)
