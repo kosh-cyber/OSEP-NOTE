@@ -60,5 +60,5 @@ $thandle=[Win32]::CreateThread(0,0,$addr,0,0,0);
 ```
 - Porting Shellcode 的方式會暫時產生編譯暫存檔
 - `[appdomain]::currentdomain.getassemblies() | Sort-Object -Property fullname | Format-Table fullname`
-- ![image](https://user-images.githubusercontent.com/81568292/137419725-60cbc852-9ae3-4138-b457-35f6aa2760ab.png)
+- ![圖片1](https://user-images.githubusercontent.com/81568292/137419802-eed0c07c-fbc1-47a4-bd32-dd82eda43167.png)
 
