@@ -61,4 +61,7 @@ $thandle=[Win32]::CreateThread(0,0,$addr,0,0,0);
 - Porting Shellcode 的方式會暫時產生編譯暫存檔所以不是真正的無檔案執行的方式
 - `[appdomain]::currentdomain.getassemblies() | Sort-Object -Property fullname | Format-Table fullname`
 - ![圖片1](https://user-images.githubusercontent.com/81568292/137419802-eed0c07c-fbc1-47a4-bd32-dd82eda43167.png)
-
+## Keep PowerShell in Memory
+- Add-Type 關鍵字讓我們可以使用 .NET 框架來編譯 C# 包含 Win32 API 定義的呼叫的程式碼。
+- 編譯過程是由 Visual C# 編譯器或 csc 執行，但這樣的行為，C#程式碼和編譯後的暫存檔案將會被臨時寫入硬碟中，就沒有達到無檔案的方式。
+- 為了讓我們的程式碼持續留存在記憶體中而不被寫入硬碟中，必須改用UnsafeNativeMethods尋找已存在的函式直接調用，利用兩種函式**GetModuleHandle、GetProcAddress**尋找存在於 Win API 中的其他函式。
